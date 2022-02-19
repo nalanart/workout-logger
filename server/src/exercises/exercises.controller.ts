@@ -18,7 +18,9 @@ export class ExercisesController {
   }
 
   @Post()
-  async createOne(@Body() createExerciseDto: CreateExerciseDto): Promise<Exercise> {
+  async createOne(
+    @Body() createExerciseDto: CreateExerciseDto,
+  ): Promise<Exercise> {
     return this.exercisesService.createOneExercise(createExerciseDto);
   }
 }

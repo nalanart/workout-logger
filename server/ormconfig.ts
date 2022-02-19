@@ -1,4 +1,4 @@
-import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export const config: PostgresConnectionOptions = {
   type: 'postgres',
@@ -8,7 +8,7 @@ export const config: PostgresConnectionOptions = {
   password: 'postgres',
   database: 'workout-logger',
   entities: ['dist/src/**/*.entity{.ts,.js}'],
-  synchronize: true
-}
+  synchronize: true,
+};
 
 export default config;

@@ -5,12 +5,14 @@ import { AppService } from './app.service';
 import { ExercisesModule } from './exercises/exercises.module';
 import { config } from '../ormconfig';
 import { SetsModule } from './sets/sets.module';
+import { WorkoutsModule } from './workouts/workouts.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
-     ExercisesModule,
-     SetsModule
+    ExercisesModule,
+    SetsModule,
+    WorkoutsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

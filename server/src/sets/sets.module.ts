@@ -7,6 +7,6 @@ import { SetsService } from './sets.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Set])],
   providers: [SetsService],
-  controllers: [SetsController]
+  controllers: [SetsController],
 })
 export class SetsModule {}

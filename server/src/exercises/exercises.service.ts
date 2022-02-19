@@ -21,6 +21,6 @@ export class ExercisesService {
 
   createOneExercise(body: CreateExerciseDto): Promise<Exercise> {
     const newExercise = this.exercisesRepository.create(body);
-    return this.exercisesRepository.save(newExercise)
+    return this.exercisesRepository.save(newExercise);
   }
 }

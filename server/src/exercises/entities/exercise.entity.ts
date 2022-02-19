@@ -1,5 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Set } from "src/sets/entities/set.entity";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Set } from 'src/sets/entities/set.entity';
+import { Workout } from 'src/workouts/entities/workout.entity';
 
 @Entity()
 export class Exercise {
@@ -9,6 +16,9 @@ export class Exercise {
   @Column()
   name: string;
 
-  @OneToMany(() => Set, set => set.exercise)
+  @OneToMany(() => Set, (set) => set.exercise)
   sets: Set[];
+
+  @ManyToOne(() => Workout, (workout) => workout.exercises)
+  workout: Workout;
 }
