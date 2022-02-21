@@ -25,4 +25,15 @@ export class ExercisesController {
   async findOne(@Param() params): Promise<Exercise> {
     return this.exercisesService.findOneExercise(params.id);
   }
+
+  @Patch(':id')
+  async updateOne(
+    @Param() params,
+    @Body() updateExerciseDto: UpdateExerciseDto,
+  ): Promise<any> {
+    return this.exercisesService.updateOneExercise(
+      params.id,
+      updateExerciseDto,
+    );
+  }
 }

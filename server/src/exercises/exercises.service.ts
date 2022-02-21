@@ -26,4 +26,13 @@ export class ExercisesService {
   async findOneExercise(id: number): Promise<Exercise> {
     return await this.exercisesRepository.findOne(id, { relations: ['sets'] });
   }
+
+  async updateOneExercise(
+    id: number,
+    updateExerciseDto: UpdateExerciseDto,
+  ): Promise<Exercise> {
+    const exerciseToUpdate = await this.findOneExercise(id);
+    exerciseToUpdate.sets = updateExerciseDto.sets;
+    return await this.exercisesRepository.save(exerciseToUpdate);
+  }
 }
