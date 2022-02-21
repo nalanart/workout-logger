@@ -16,7 +16,7 @@ export class Exercise {
   @Column()
   name: string;
 
-  @OneToMany(() => Set, (set) => set.exercise)
+  @OneToMany(() => Set, (set) => set.exercise, { cascade: true })
   sets: Set[];
 
   @ManyToOne(() => Workout, (workout) => workout.exercises)

@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { UpdateResult } from 'typeorm';
 import { CreateExerciseDto } from './dtos/create-exercise.dto';
+import { UpdateExerciseDto } from './dtos/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
 import { ExercisesService } from './exercises.service';
 
@@ -7,20 +9,20 @@ import { ExercisesService } from './exercises.service';
 export class ExercisesController {
   constructor(private readonly exercisesService: ExercisesService) {}
 
-  @Get()
-  findAll(): Promise<Exercise[]> {
-    return this.exercisesService.findAllExercises();
-  }
-
-  @Get(':id')
-  findOne(@Param() params): Promise<Exercise> {
-    return this.exercisesService.findOneExercise(params.id);
-  }
-
   @Post()
   async createOne(
     @Body() createExerciseDto: CreateExerciseDto,
   ): Promise<Exercise> {
     return this.exercisesService.createOneExercise(createExerciseDto);
+  }
+
+  @Get()
+  async findAll(): Promise<Exercise[]> {
+    return this.exercisesService.findAllExercises();
+  }
+
+  @Get(':id')
+  async findOne(@Param() params): Promise<Exercise> {
+    return this.exercisesService.findOneExercise(params.id);
   }
 }
