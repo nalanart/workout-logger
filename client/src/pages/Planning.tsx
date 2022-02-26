@@ -7,9 +7,12 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { AddExercise } from '../components/AddExercise';
 import { Exercise } from '../components/Exercise';
 import { ExerciseSelector } from '../components/ExerciseSelector';
+import { IExercise } from '../components/Exercise';
 
 const exercises = [
   { id: 1, name: 'Bench Press', sets: [] },
@@ -17,16 +20,28 @@ const exercises = [
 ];
 
 export const PlanningPage = () => {
+  const [exercisesAvailable, setExercisesAvailable] = useState<IExercise[]>([]);
+
+  useEffect(() => {
+    const getExercises = async () => {
+      const res = await axios.get('/exercises');
+      setExercisesAvailable(res.data);
+    };
+
+    getExercises();
+  }, []);
+
   return (
     <Container>
-      <Grid container spacing={2} sx={{ mb: 2 }}>
+      <Grid container spacing={2} sx={{ mb: 5, gap: 2 }}>
         {exercises.map((exercise) => (
-          <Grid item>
-            <Exercise key={exercise.id} exercise={exercise} />
+          <Grid item key={exercise.id}>
+            <Exercise exercise={exercise} />
           </Grid>
         ))}
       </Grid>
-      <ExerciseSelector />
+      <ExerciseSelector exercises={exercisesAvailable} />
+      <AddExercise />
     </Container>
   );
 };

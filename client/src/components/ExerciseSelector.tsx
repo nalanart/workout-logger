@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Container,
@@ -6,9 +6,21 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
 } from '@mui/material';
+import { IExercise } from './Exercise';
 
-export const ExerciseSelector = () => {
+interface IProps {
+  exercises: IExercise[];
+}
+
+export const ExerciseSelector = ({ exercises }: IProps) => {
+  const [selectedExercise, setSelectedExercise] = useState('');
+
+  const handleChange = (e: SelectChangeEvent) => {
+    setSelectedExercise(e.target.value);
+  };
+
   return (
     <FormControl fullWidth>
       <InputLabel id="exercise-select-label">Select an exercise</InputLabel>
@@ -16,11 +28,16 @@ export const ExerciseSelector = () => {
         labelId="exercise-select-label"
         id="exercise-select"
         label="Select an exercise"
-        onChange={() => console.log('selected')}
+        onChange={handleChange}
       >
-        <MenuItem value="Bench Press">Bench Press</MenuItem>
-        <MenuItem value="Deadlift">Deadlift</MenuItem>
-        <MenuItem value="Squat">Squat</MenuItem>
+        {exercises.map((exercise) => {
+          const { id, name } = exercise;
+          return (
+            <MenuItem key={id} value={name}>
+              {name}
+            </MenuItem>
+          );
+        })}
       </Select>
     </FormControl>
   );

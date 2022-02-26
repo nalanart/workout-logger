@@ -14,14 +14,14 @@ import { AddSet } from './AddSet';
 
 interface Set {}
 
-interface Exercise {
+export interface IExercise {
   id: number;
   name: string;
   sets: number[];
 }
 
 interface IProps {
-  exercise: Exercise;
+  exercise: IExercise;
 }
 
 export const Exercise = ({ exercise }: IProps) => {

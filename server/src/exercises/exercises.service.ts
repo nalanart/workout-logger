@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateExerciseDto } from './dtos/create-exercise.dto';
 import { UpdateExerciseDto } from './dtos/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
@@ -20,19 +20,18 @@ export class ExercisesService {
   }
 
   async findAllExercises(): Promise<Exercise[]> {
-    return await this.exercisesRepository.find({ relations: ['sets'] });
+    return await this.exercisesRepository.find();
   }
 
   async findOneExercise(id: number): Promise<Exercise> {
-    return await this.exercisesRepository.findOne(id, { relations: ['sets'] });
+    return await this.exercisesRepository.findOne(id);
   }
 
   async updateOneExercise(
     id: number,
     updateExerciseDto: UpdateExerciseDto,
   ): Promise<Exercise> {
-    const exerciseToUpdate = await this.findOneExercise(id);
-    exerciseToUpdate.sets = updateExerciseDto.sets;
-    return await this.exercisesRepository.save(exerciseToUpdate);
+    await this.exercisesRepository.update(id, updateExerciseDto);
+    return this.findOneExercise(id);
   }
 }

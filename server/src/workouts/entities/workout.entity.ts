@@ -1,5 +1,6 @@
-import { Exercise } from 'src/exercises/entities/exercise.entity';
+import { WorkoutExercise } from 'src/workout-exercises/entities/workout-exercise.entity';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   OneToMany,
@@ -14,6 +15,6 @@ export class Workout {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @OneToMany(() => Exercise, (exercise) => exercise.workout)
-  exercises: Exercise[];
+  @OneToMany(() => WorkoutExercise, (exercise) => exercise.workout)
+  exercises: WorkoutExercise[];
 }

@@ -6,6 +6,7 @@ import { ExercisesModule } from './exercises/exercises.module';
 import { config } from '../ormconfig';
 import { SetsModule } from './sets/sets.module';
 import { WorkoutsModule } from './workouts/workouts.module';
+import { WorkoutExercisesModule } from './workout-exercises/workout-exercises.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { WorkoutsModule } from './workouts/workouts.module';
     ExercisesModule,
     SetsModule,
     WorkoutsModule,
+    WorkoutExercisesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

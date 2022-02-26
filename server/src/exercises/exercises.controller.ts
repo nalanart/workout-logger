@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
-import { UpdateResult } from 'typeorm';
+import { Request } from 'express';
 import { CreateExerciseDto } from './dtos/create-exercise.dto';
 import { UpdateExerciseDto } from './dtos/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
@@ -30,7 +30,7 @@ export class ExercisesController {
   async updateOne(
     @Param() params,
     @Body() updateExerciseDto: UpdateExerciseDto,
-  ): Promise<any> {
+  ): Promise<Exercise> {
     return this.exercisesService.updateOneExercise(
       params.id,
       updateExerciseDto,
