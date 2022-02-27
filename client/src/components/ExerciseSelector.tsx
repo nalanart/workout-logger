@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
@@ -19,6 +19,7 @@ export const ExerciseSelector = ({ exercises }: IProps) => {
 
   const handleChange = (e: SelectChangeEvent) => {
     setSelectedExercise(e.target.value);
+    console.log(selectedExercise);
   };
 
   return (
@@ -28,6 +29,7 @@ export const ExerciseSelector = ({ exercises }: IProps) => {
         labelId="exercise-select-label"
         id="exercise-select"
         label="Select an exercise"
+        value={selectedExercise}
         onChange={handleChange}
       >
         {exercises.map((exercise) => {

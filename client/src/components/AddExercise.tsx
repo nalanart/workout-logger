@@ -1,8 +1,11 @@
 import { Box, Button, TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useCreateOneExerciseMutation } from '../redux/endpoints/exercises-endpoints';
 
 export const AddExercise = () => {
+  const [createExercise, { isLoading: isCreatingExercise }] =
+    useCreateOneExerciseMutation();
   const [exerciseToAdd, setExerciseToAdd] = useState('');
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,7 +14,7 @@ export const AddExercise = () => {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await axios.post('/exercises', { name: exerciseToAdd });
+    await createExercise({ name: exerciseToAdd });
     setExerciseToAdd('');
   };
 
@@ -27,6 +30,7 @@ export const AddExercise = () => {
         variant="standard"
         value={exerciseToAdd}
         onChange={handleOnChange}
+        fullWidth
       />
       <Button type="submit">ADD</Button>
     </Box>
