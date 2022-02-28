@@ -5,6 +5,11 @@ import { Exercise } from '../components/Exercise';
 import { ExerciseSelector } from '../components/ExerciseSelector';
 import { IExercise } from '../components/Exercise';
 import { useGetManyExercisesQuery } from '../redux/endpoints/exercises-endpoints';
+import {
+  useGetWorkoutQuery,
+  Workout,
+} from '../redux/endpoints/workouts-endpoints';
+import { useSearchParams } from 'react-router-dom';
 
 const exercises = [
   { id: 1, name: 'Bench Press', sets: [] },
@@ -12,19 +17,29 @@ const exercises = [
 ];
 
 export const PlanningPage = () => {
-  const { data, error, isLoading } = useGetManyExercisesQuery();
-  const exercisesToSelect = (data as unknown as IExercise[]) || [];
-  if (isLoading) return <div>Loading...</div>;
+  let [searchParams, setSearchParams] = useSearchParams();
+  let workoutId = searchParams.get('workoutId') as unknown as number;
+
+  const { data: workoutData, isLoading: isGetWorkoutLoading } =
+    useGetWorkoutQuery(workoutId);
+  const {
+    data: exercisesData,
+    error,
+    isLoading: isGetManyExercisesLoading,
+  } = useGetManyExercisesQuery();
+  const exercisesToSelect = (exercisesData as unknown as IExercise[]) || [];
+
+  if (isGetManyExercisesLoading) return <div>Loading...</div>;
 
   return (
-    <Container>
+    <Container sx={{ pt: 2 }}>
       <Box sx={{ mb: 5, display: 'grid', gap: 2 }}>
-        {exercises.map((exercise) => (
+        {workoutData?.exercises.map((exercise) => (
           <Exercise key={exercise.id} exercise={exercise} />
         ))}
       </Box>
-      <ExerciseSelector exercises={exercisesToSelect} />
-      <AddExercise />
+      <ExerciseSelector exercises={exercisesToSelect} workout={workoutData} />
+      <AddExercise workout={workoutData} />
     </Container>
   );
 };

@@ -15,6 +15,10 @@ export class Workout {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @OneToMany(() => WorkoutExercise, (exercise) => exercise.workout)
+  @Column('jsonb', { array: false, default: [], nullable: true })
   exercises: WorkoutExercise[];
+  // @OneToMany(() => WorkoutExercise, (exercise) => exercise.workout, {
+  //   onUpdate: 'CASCADE',
+  // })
+  // exercises: WorkoutExercise[];
 }

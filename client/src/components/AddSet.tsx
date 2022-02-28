@@ -11,11 +11,15 @@ import {
   Typography,
 } from '@mui/material';
 
-export const AddSet = () => {
+interface IProps {
+  setNumber: number;
+}
+
+export const AddSet = ({ setNumber }: IProps) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Typography component="span" variant="subtitle1">
-        Set 3:
+        Set {setNumber + 1}:
       </Typography>
       <FormControl sx={{ width: '4rem', ml: 1 }}>
         <Input

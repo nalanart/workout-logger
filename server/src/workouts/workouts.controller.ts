@@ -10,13 +10,14 @@ import {
 import { WorkoutsService } from './workouts.service';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
+import { Workout } from './entities/workout.entity';
 
 @Controller('workouts')
 export class WorkoutsController {
   constructor(private readonly workoutsService: WorkoutsService) {}
 
   @Post()
-  create(@Body() createWorkoutDto: CreateWorkoutDto) {
+  create(@Body() createWorkoutDto: CreateWorkoutDto): Promise<Workout> {
     return this.workoutsService.create(createWorkoutDto);
   }
 

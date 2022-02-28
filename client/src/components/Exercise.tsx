@@ -12,12 +12,15 @@ import {
 import React from 'react';
 import { AddSet } from './AddSet';
 
-interface Set {}
+interface ISet {
+  weight: number;
+  reps: number;
+}
 
 export interface IExercise {
   id: number;
   name: string;
-  sets: number[];
+  sets: ISet[];
 }
 
 interface IProps {
@@ -25,7 +28,7 @@ interface IProps {
 }
 
 export const Exercise = ({ exercise }: IProps) => {
-  const { name } = exercise;
+  const { name, sets } = exercise;
 
   return (
     <Box>
@@ -39,17 +42,17 @@ export const Exercise = ({ exercise }: IProps) => {
         </Box>
       </Box>
       <Box sx={{ ml: 2 }}>
-        <Box>
-          <Typography component="div" variant="subtitle1">
-            Set 1: 8 reps @ 50 lbs
-          </Typography>
-        </Box>
-        <Box>
-          <Typography component="div" variant="subtitle1">
-            Set 2: 7 reps @ 50 lbs
-          </Typography>
-        </Box>
-        <AddSet />
+        {sets.map((set, index) => {
+          const { weight, reps } = set;
+          return (
+            <Box>
+              <Typography component="div" variant="subtitle1">
+                Set {index}: {reps} reps @ {weight} lbs
+              </Typography>
+            </Box>
+          );
+        })}
+        <AddSet setNumber={sets.length} />
       </Box>
     </Box>
   );

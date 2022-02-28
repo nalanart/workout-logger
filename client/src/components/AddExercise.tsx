@@ -2,11 +2,21 @@ import { Box, Button, TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useCreateOneExerciseMutation } from '../redux/endpoints/exercises-endpoints';
+import {
+  useUpdateWorkoutMutation,
+  Workout,
+} from '../redux/endpoints/workouts-endpoints';
 
-export const AddExercise = () => {
+interface IProps {
+  workout?: Workout;
+}
+
+export const AddExercise = ({ workout }: IProps) => {
   const [createExercise, { isLoading: isCreatingExercise }] =
     useCreateOneExerciseMutation();
   const [exerciseToAdd, setExerciseToAdd] = useState('');
+  const [updateWorkout, { isLoading: isUpdateWorkoutLoading }] =
+    useUpdateWorkoutMutation();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExerciseToAdd(e.target.value);
@@ -14,8 +24,14 @@ export const AddExercise = () => {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createExercise({ name: exerciseToAdd });
-    setExerciseToAdd('');
+    const newExercise = await createExercise({ name: exerciseToAdd }).unwrap();
+    if (workout) {
+      await updateWorkout({
+        ...workout,
+        exercises: [...workout.exercises, { ...newExercise, sets: [] }],
+      });
+      setExerciseToAdd('');
+    }
   };
 
   return (

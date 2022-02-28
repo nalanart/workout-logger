@@ -9,17 +9,33 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { IExercise } from './Exercise';
+import {
+  useUpdateWorkoutMutation,
+  Workout,
+} from '../redux/endpoints/workouts-endpoints';
 
 interface IProps {
   exercises: IExercise[];
+  workout?: Workout;
 }
 
-export const ExerciseSelector = ({ exercises }: IProps) => {
+export const ExerciseSelector = ({ exercises, workout }: IProps) => {
   const [selectedExercise, setSelectedExercise] = useState('');
+  const [updateWorkout, { isLoading: isUpdateWorkoutLoading }] =
+    useUpdateWorkoutMutation();
 
-  const handleChange = (e: SelectChangeEvent) => {
-    setSelectedExercise(e.target.value);
-    console.log(selectedExercise);
+  const handleChange = async (e: SelectChangeEvent) => {
+    if (workout) {
+      const updated = await updateWorkout({
+        ...workout,
+        exercises: [
+          ...workout.exercises,
+          { id: 1, name: e.target.value, sets: [] },
+        ],
+      });
+      console.log(updated);
+    }
+    setSelectedExercise('');
   };
 
   return (
