@@ -15,10 +15,4 @@ export class Exercise {
 
   @Column()
   name: string;
-
-  @OneToMany(() => Set, (set) => set.exercise)
-  sets: Set[];
-
-  @ManyToOne(() => Workout, (workout) => workout.exercises)
-  workout: Workout;
 }

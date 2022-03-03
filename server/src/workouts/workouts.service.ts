@@ -12,8 +12,8 @@ export class WorkoutsService {
     private workoutsRepository: Repository<Workout>,
   ) {}
 
-  create(createWorkoutDto: CreateWorkoutDto): Promise<Workout> {
-    const newWorkout = this.workoutsRepository.create(createWorkoutDto);
+  create(): Promise<Workout> {
+    const newWorkout = this.workoutsRepository.create({ exercises: [] });
     return this.workoutsRepository.save(newWorkout);
   }
 
@@ -22,20 +22,15 @@ export class WorkoutsService {
   }
 
   findOne(id: number): Promise<Workout> {
-    return this.workoutsRepository.findOne(id, {
-      relations: ['exercises', 'exercises.sets'],
-    });
+    return this.workoutsRepository.findOne(id);
   }
 
   async update(
     id: number,
     updateWorkoutDto: UpdateWorkoutDto,
   ): Promise<Workout> {
-    const workoutToUpdate = await this.findOne(id);
-    if (workoutToUpdate) {
-      workoutToUpdate.exercises = updateWorkoutDto.exercises;
-      return this.workoutsRepository.save(workoutToUpdate);
-    }
+    await this.workoutsRepository.update(id, updateWorkoutDto);
+    return await this.findOne(id);
   }
 
   remove(id: number) {

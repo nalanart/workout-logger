@@ -20,29 +20,25 @@ export class ExercisesController {
   @Post()
   async createOne(
     @Body() createExerciseDto: CreateExerciseDto,
-    @Query('workoutId') workoutId: number,
   ): Promise<Exercise> {
-    return this.exercisesService.createExercise(createExerciseDto, workoutId);
+    return this.exercisesService.createExercise(createExerciseDto);
   }
 
   @Get()
-  async findDistinct(): Promise<Exercise[]> {
-    return this.exercisesService.findDistinctExercises();
+  async findAll(): Promise<Exercise[]> {
+    return this.exercisesService.findExercises();
   }
 
   @Get(':id')
-  async findOne(@Param() params): Promise<Exercise> {
-    return this.exercisesService.findOneExercise(params.id);
+  async findOne(@Param('id') id: number): Promise<Exercise> {
+    return this.exercisesService.findExercise(id);
   }
 
   @Patch(':id')
   async updateOne(
-    @Param() params,
+    @Param('id') id: number,
     @Body() updateExerciseDto: UpdateExerciseDto,
   ): Promise<Exercise> {
-    return this.exercisesService.updateOneExercise(
-      params.id,
-      updateExerciseDto,
-    );
+    return this.exercisesService.updateExercise(id, updateExerciseDto);
   }
 }

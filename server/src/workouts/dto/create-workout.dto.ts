@@ -1,5 +1,5 @@
-import { Exercise } from 'src/exercises/entities/exercise.entity';
+import { WorkoutExercise } from 'src/workout-exercises/entities/workout-exercise.entity';
 
 export class CreateWorkoutDto {
-  exercises: Exercise[];
+  exercises: WorkoutExercise[];
 }

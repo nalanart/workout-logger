@@ -1,4 +1,4 @@
-import { Exercise } from 'src/exercises/entities/exercise.entity';
+import { WorkoutExercise } from 'src/workout-exercises/entities/workout-exercise.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -12,6 +12,6 @@ export class Set {
   @Column()
   weight: number;
 
-  @ManyToOne(() => Exercise, (exercise) => exercise.sets)
-  exercise: Exercise;
+  @ManyToOne(() => WorkoutExercise, (exercise) => exercise.sets)
+  exercise: WorkoutExercise;
 }

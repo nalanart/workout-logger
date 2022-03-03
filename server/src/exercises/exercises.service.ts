@@ -16,33 +16,44 @@ export class ExercisesService {
 
   async createExercise(
     createExerciseDto: CreateExerciseDto,
-    workoutId: number,
   ): Promise<Exercise> {
     const newExercise = this.exercisesRepository.create(createExerciseDto);
-    const workoutsRepository = getRepository(Workout);
-    const workout = await workoutsRepository.findOne(workoutId);
-    newExercise.workout = workout;
-    return this.exercisesRepository.save(newExercise);
+    return await this.exercisesRepository.save(newExercise);
   }
 
-  async findDistinctExercises(): Promise<Exercise[]> {
-    const distinctExercises = await this.exercisesRepository
-      .createQueryBuilder('exercise')
-      .select()
-      .distinctOn(['name'])
-      .getMany();
-    return distinctExercises;
+  async findExercises(): Promise<Exercise[]> {
+    return await this.exercisesRepository.find();
   }
 
-  async findOneExercise(id: number): Promise<Exercise> {
+  // async createExercise(
+  //   createExerciseDto: CreateExerciseDto,
+  //   workoutId: number,
+  // ): Promise<Exercise> {
+  //   const newExercise = this.exercisesRepository.create(createExerciseDto);
+  //   const workoutsRepository = getRepository(Workout);
+  //   const workout = await workoutsRepository.findOne(workoutId);
+  //   newExercise.workout = workout;
+  //   return this.exercisesRepository.save(newExercise);
+  // }
+
+  // async findDistinctExercises(): Promise<Exercise[]> {
+  //   const distinctExercises = await this.exercisesRepository
+  //     .createQueryBuilder('exercise')
+  //     .select()
+  //     .distinctOn(['name'])
+  //     .getMany();
+  //   return distinctExercises;
+  // }
+
+  async findExercise(id: number): Promise<Exercise> {
     return await this.exercisesRepository.findOne(id);
   }
 
-  async updateOneExercise(
+  async updateExercise(
     id: number,
     updateExerciseDto: UpdateExerciseDto,
   ): Promise<Exercise> {
     await this.exercisesRepository.update(id, updateExerciseDto);
-    return await this.findOneExercise(id);
+    return await this.findExercise(id);
   }
 }
