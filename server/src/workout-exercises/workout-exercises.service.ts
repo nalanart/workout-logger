@@ -12,13 +12,14 @@ export class WorkoutExercisesService {
     private workoutExercisesRepository: Repository<WorkoutExercise>,
   ) {}
 
-  async createExercise(
+  async createWorkoutExercise(
     createWorkoutExerciseDto: CreateWorkoutExerciseDto,
     workoutId: number,
   ): Promise<WorkoutExercise> {
-    const newExercise = this.workoutExercisesRepository.create(
-      createWorkoutExerciseDto,
-    );
+    const newExercise = this.workoutExercisesRepository.create({
+      ...createWorkoutExerciseDto,
+      sets: [],
+    });
     const workoutsRepository = getRepository(Workout);
     const workout = await workoutsRepository.findOne(workoutId);
     newExercise.workout = workout;
