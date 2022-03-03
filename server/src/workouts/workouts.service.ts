@@ -22,7 +22,9 @@ export class WorkoutsService {
   }
 
   findOne(id: number): Promise<Workout> {
-    return this.workoutsRepository.findOne(id);
+    return this.workoutsRepository.findOne(id, {
+      relations: ['exercises', 'exercises.sets'],
+    });
   }
 
   async update(

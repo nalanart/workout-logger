@@ -1,4 +1,4 @@
-import { WorkoutExercise } from 'src/workout-exercises/entities/workout-exercise.entity';
+import { Exercise } from 'src/exercises/entities/exercise.entity';
 import {
   Column,
   CreateDateColumn,
@@ -15,10 +15,10 @@ export class Workout {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column('jsonb', { array: false, default: [], nullable: true })
-  exercises: WorkoutExercise[];
-  // @OneToMany(() => WorkoutExercise, (exercise) => exercise.workout, {
-  //   onUpdate: 'CASCADE',
-  // })
+  // @Column('jsonb', { array: false, default: [], nullable: true })
   // exercises: WorkoutExercise[];
+  @OneToMany(() => Exercise, (exercise) => exercise.workout, {
+    onUpdate: 'CASCADE',
+  })
+  exercises: Exercise[];
 }

@@ -11,7 +11,13 @@ export class SetsService {
     private setsRepository: Repository<Set>,
   ) {}
 
-  async updateOneSet(id: number, updateSetDto: UpdateSetDto) {
-    return await this.setsRepository.update(id, updateSetDto);
+  async createSet(): Promise<Set> {
+    const newSet = this.setsRepository.create({ reps: null, weight: null });
+    return await this.setsRepository.save(newSet);
+  }
+
+  async updateSet(id: number, updateSetDto: UpdateSetDto): Promise<Set> {
+    await this.setsRepository.update(id, updateSetDto);
+    return await this.setsRepository.findOne(id);
   }
 }

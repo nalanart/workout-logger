@@ -35,7 +35,11 @@ export const PlanningPage = () => {
     <Container sx={{ pt: 2 }}>
       <Box sx={{ mb: 5, display: 'grid', gap: 2 }}>
         {workoutData?.exercises.map((exercise) => (
-          <Exercise key={exercise.id} exercise={exercise} />
+          <Exercise
+            key={exercise.id}
+            exercise={exercise}
+            workout={workoutData}
+          />
         ))}
       </Box>
       <ExerciseSelector exercises={exercisesToSelect} workout={workoutData} />

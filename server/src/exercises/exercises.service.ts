@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { CreateExerciseDto } from './dtos/create-exercise.dto';
 import { UpdateExerciseDto } from './dtos/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
+import { getManager } from 'typeorm';
+import { Workout } from 'src/workouts/entities/workout.entity';
 
 @Injectable()
 export class ExercisesService {
@@ -12,15 +14,24 @@ export class ExercisesService {
     private exercisesRepository: Repository<Exercise>,
   ) {}
 
-  async createOneExercise(
+  async createExercise(
     createExerciseDto: CreateExerciseDto,
+    workoutId: number,
   ): Promise<Exercise> {
     const newExercise = this.exercisesRepository.create(createExerciseDto);
+    const workoutsRepository = getRepository(Workout);
+    const workout = await workoutsRepository.findOne(workoutId);
+    newExercise.workout = workout;
     return this.exercisesRepository.save(newExercise);
   }
 
-  async findAllExercises(): Promise<Exercise[]> {
-    return await this.exercisesRepository.find();
+  async findDistinctExercises(): Promise<Exercise[]> {
+    const distinctExercises = await this.exercisesRepository
+      .createQueryBuilder('exercise')
+      .select()
+      .distinctOn(['name'])
+      .getMany();
+    return distinctExercises;
   }
 
   async findOneExercise(id: number): Promise<Exercise> {
@@ -32,6 +43,6 @@ export class ExercisesService {
     updateExerciseDto: UpdateExerciseDto,
   ): Promise<Exercise> {
     await this.exercisesRepository.update(id, updateExerciseDto);
-    return this.findOneExercise(id);
+    return await this.findOneExercise(id);
   }
 }

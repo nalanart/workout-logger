@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { CreateExerciseDto } from './dtos/create-exercise.dto';
 import { UpdateExerciseDto } from './dtos/update-exercise.dto';
@@ -12,13 +20,14 @@ export class ExercisesController {
   @Post()
   async createOne(
     @Body() createExerciseDto: CreateExerciseDto,
+    @Query('workoutId') workoutId: number,
   ): Promise<Exercise> {
-    return this.exercisesService.createOneExercise(createExerciseDto);
+    return this.exercisesService.createExercise(createExerciseDto, workoutId);
   }
 
   @Get()
-  async findAll(): Promise<Exercise[]> {
-    return this.exercisesService.findAllExercises();
+  async findDistinct(): Promise<Exercise[]> {
+    return this.exercisesService.findDistinctExercises();
   }
 
   @Get(':id')

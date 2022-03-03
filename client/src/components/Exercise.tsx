@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { Workout } from '../redux/endpoints/workouts-endpoints';
 import { AddSet } from './AddSet';
 
 interface ISet {
@@ -25,9 +26,10 @@ export interface IExercise {
 
 interface IProps {
   exercise: IExercise;
+  workout?: Workout;
 }
 
-export const Exercise = ({ exercise }: IProps) => {
+export const Exercise = ({ exercise, workout }: IProps) => {
   const { name, sets } = exercise;
 
   return (
@@ -47,12 +49,12 @@ export const Exercise = ({ exercise }: IProps) => {
           return (
             <Box>
               <Typography component="div" variant="subtitle1">
-                Set {index}: {reps} reps @ {weight} lbs
+                Set {index + 1}: {reps} reps @ {weight} lbs
               </Typography>
             </Box>
           );
         })}
-        <AddSet setNumber={sets.length} />
+        <AddSet setNumber={sets.length} workout={workout} exercise={exercise} />
       </Box>
     </Box>
   );
