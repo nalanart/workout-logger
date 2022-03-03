@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { WorkoutExercise } from 'src/workout-exercises/entities/workout-exercise.entity';
+import { getRepository, Repository } from 'typeorm';
+import { CreateSetDto } from './dtos/create-set.dto';
 import { UpdateSetDto } from './dtos/update-set.dto';
 import { Set } from './entities/set.entity';
 
@@ -11,8 +13,16 @@ export class SetsService {
     private setsRepository: Repository<Set>,
   ) {}
 
-  async createSet(): Promise<Set> {
-    const newSet = this.setsRepository.create({ reps: null, weight: null });
+  async createSet(
+    createSetDto: CreateSetDto,
+    workoutExerciseId: number,
+  ): Promise<Set> {
+    const newSet = this.setsRepository.create(createSetDto);
+    const workoutExercisesRepository = getRepository(WorkoutExercise);
+    const workoutExercise = await workoutExercisesRepository.findOne(
+      workoutExerciseId,
+    );
+    newSet.exercise = workoutExercise;
     return await this.setsRepository.save(newSet);
   }
 

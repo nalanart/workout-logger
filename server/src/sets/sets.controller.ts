@@ -1,4 +1,5 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Param, Patch, Post, Query } from '@nestjs/common';
+import { CreateSetDto } from './dtos/create-set.dto';
 import { UpdateSetDto } from './dtos/update-set.dto';
 import { Set } from './entities/set.entity';
 import { SetsService } from './sets.service';
@@ -8,8 +9,11 @@ export class SetsController {
   constructor(private readonly setsService: SetsService) {}
 
   @Post()
-  create(): Promise<Set> {
-    return this.setsService.createSet();
+  create(
+    @Body() createSetDto: CreateSetDto,
+    @Query('workoutExerciseId') workoutExerciseId: number,
+  ): Promise<Set> {
+    return this.setsService.createSet(createSetDto, workoutExerciseId);
   }
 
   @Patch(':id')
