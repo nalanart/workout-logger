@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ExercisesModule } from './exercises/exercises.module';
 import { config } from '../ormconfig';
 import { SetsModule } from './sets/sets.module';
@@ -16,7 +14,5 @@ import { WorkoutExercisesModule } from './workout-exercises/workout-exercises.mo
     WorkoutsModule,
     WorkoutExercisesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
