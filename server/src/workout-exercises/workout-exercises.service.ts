@@ -16,8 +16,9 @@ export class WorkoutExercisesService {
     createWorkoutExerciseDto: CreateWorkoutExerciseDto,
     workoutId: number,
   ): Promise<WorkoutExercise> {
+    console.log(workoutId);
     const newExercise = this.workoutExercisesRepository.create({
-      ...createWorkoutExerciseDto,
+      name: createWorkoutExerciseDto.name,
       sets: [],
     });
     const workoutsRepository = getRepository(Workout);

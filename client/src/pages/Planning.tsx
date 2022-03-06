@@ -22,6 +22,7 @@ export const PlanningPage = () => {
 
   const { data: workoutData, isLoading: isGetWorkoutLoading } =
     useGetWorkoutQuery(workoutId);
+    console.log(workoutData);
   const {
     data: exercisesData,
     error,

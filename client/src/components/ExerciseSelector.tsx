@@ -13,6 +13,7 @@ import {
   useUpdateWorkoutMutation,
   Workout,
 } from '../redux/endpoints/workouts-endpoints';
+import { useCreateOneWorkoutExerciseMutation } from '../redux/endpoints/workout-exercises-endpoints';
 
 interface IProps {
   exercises: IExercise[];
@@ -23,18 +24,10 @@ export const ExerciseSelector = ({ exercises, workout }: IProps) => {
   const [selectedExercise, setSelectedExercise] = useState('');
   const [updateWorkout, { isLoading: isUpdateWorkoutLoading }] =
     useUpdateWorkoutMutation();
+  const [createWorkoutExercise, { isLoading: isCreatWorkoutExerciseLoading }] = useCreateOneWorkoutExerciseMutation();
 
   const handleChange = async (e: SelectChangeEvent) => {
-    if (workout) {
-      const updated = await updateWorkout({
-        ...workout,
-        exercises: [
-          ...workout.exercises,
-          { id: 1, name: e.target.value, sets: [] },
-        ],
-      });
-      console.log(updated);
-    }
+    createWorkoutExercise({ workoutId: workout?.id, body: { name: e.target.value } });
     setSelectedExercise('');
   };
 
