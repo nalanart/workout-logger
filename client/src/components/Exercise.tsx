@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { useDeleteExerciseMutation } from '../redux/endpoints/workout-exercises-endpoints';
 import { Workout } from '../redux/endpoints/workouts-endpoints';
 import { AddSet } from './AddSet';
 
@@ -31,6 +32,12 @@ interface IProps {
 
 export const Exercise = ({ exercise, workout }: IProps) => {
   const { name, sets } = exercise;
+  const [deleteExercise, { isLoading: isDeleteExerciseLoading }] =
+    useDeleteExerciseMutation();
+
+  const handleDeleteExercise = () => {
+    deleteExercise(exercise.id);
+  };
 
   return (
     <Box>
@@ -40,7 +47,7 @@ export const Exercise = ({ exercise, workout }: IProps) => {
         </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Edit />
-          <Delete />
+          <Delete onClick={handleDeleteExercise} />
         </Box>
       </Box>
       <Box sx={{ ml: 2 }}>

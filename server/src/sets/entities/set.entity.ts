@@ -12,6 +12,8 @@ export class Set {
   @Column()
   weight: number;
 
-  @ManyToOne(() => WorkoutExercise, (exercise) => exercise.sets)
+  @ManyToOne(() => WorkoutExercise, (exercise) => exercise.sets, {
+    onDelete: 'CASCADE',
+  })
   exercise: WorkoutExercise;
 }

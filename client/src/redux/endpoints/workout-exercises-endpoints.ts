@@ -8,12 +8,22 @@ export const workoutExercisesApi = api.injectEndpoints({
       }),
       providesTags: ['WorkoutExercise'],
     }),
-    createOneWorkoutExercise: build.mutation<WorkoutExercise, CreateWorkoutExerciseDto>({
-      query: ({ workoutId, body}) => ({
+    createOneWorkoutExercise: build.mutation<
+      WorkoutExercise,
+      CreateWorkoutExerciseDto
+    >({
+      query: ({ workoutId, body }) => ({
         url: '/workout-exercises',
         method: 'POST',
-        params: {workoutId},
+        params: { workoutId },
         body,
+      }),
+      invalidatesTags: ['WorkoutExercise', 'Workout'],
+    }),
+    deleteExercise: build.mutation<void, number>({
+      query: (id) => ({
+        url: `/workout-exercises/${id}`,
+        method: 'DELETE',
       }),
       invalidatesTags: ['WorkoutExercise', 'Workout'],
     }),
@@ -31,5 +41,8 @@ export type CreateWorkoutExerciseDto = {
   body: WorkoutExercise;
 };
 
-export const { useGetManyWorkoutExercisesQuery, useCreateOneWorkoutExerciseMutation } =
-  workoutExercisesApi;
+export const {
+  useGetManyWorkoutExercisesQuery,
+  useCreateOneWorkoutExerciseMutation,
+  useDeleteExerciseMutation,
+} = workoutExercisesApi;

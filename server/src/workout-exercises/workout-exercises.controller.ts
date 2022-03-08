@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Query } from '@nestjs/common';
 import { CreateWorkoutExerciseDto } from './dtos/create-workout-exercise.dto';
 import { WorkoutExercise } from './entities/workout-exercise.entity';
 import { WorkoutExercisesService } from './workout-exercises.service';
@@ -18,5 +18,10 @@ export class WorkoutExercisesController {
       createWorkoutExerciseDto,
       workoutId,
     );
+  }
+
+  @Delete(':id')
+  async deleteOne(@Param('id') id: number) {
+    return this.workoutExercisesService.deleteWorkoutExercise(id);
   }
 }

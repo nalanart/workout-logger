@@ -5,7 +5,9 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class WorkoutExercise extends Exercise {
-  @ManyToOne(() => Workout, (workout) => workout.exercises, { onUpdate: 'CASCADE' })
+  @ManyToOne(() => Workout, (workout) => workout.exercises, {
+    onUpdate: 'CASCADE',
+  })
   workout: Workout;
 
   @OneToMany(() => Set, (set) => set.exercise)

@@ -26,4 +26,8 @@ export class WorkoutExercisesService {
     newExercise.workout = workout;
     return this.workoutExercisesRepository.save(newExercise);
   }
+
+  async deleteWorkoutExercise(id: number) {
+    this.workoutExercisesRepository.delete(id);
+  }
 }
